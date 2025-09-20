@@ -1,10 +1,9 @@
-
 public class Subject {
     private String subjectId;
     private String name; // ชื่อวิชา
     private int credit; // หน่วยกิต
     private String teacher;
-    private String preSubject;
+    private String preSubject; // วิชาบังคับ
     private int maxStudents;
     private int currentStudents;
 
