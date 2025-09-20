@@ -8,9 +8,10 @@ public class Student {
     private LocalDate birthday;
     private String school;
     private String email;
+    private String password; 
 
     public Student(String studentId, String title, String firstName, String lastName,
-                   LocalDate birthday, String school, String email) {
+                   LocalDate birthday, String school, String email, String password) {
         this.studentId = studentId;
         this.title = title;
         this.firstName = firstName;
@@ -18,10 +19,13 @@ public class Student {
         this.birthday = birthday;
         this.school = school;
         this.email = email;
+        this.password = password;
     }
 
+    public String getPassword() { return password; }
+
     public int getAge() {
-        return LocalDate.now().getYear() - birthday.getYear();
+        return java.time.Period.between(birthday, java.time.LocalDate.now()).getYears();
     }
 
     public String getStudentId() {
