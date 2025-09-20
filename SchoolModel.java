@@ -35,4 +35,5 @@ public class SchoolModel {
         sub.addStudent();
         return true;
     }
+
 }
