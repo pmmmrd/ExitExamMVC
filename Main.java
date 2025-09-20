@@ -1,4 +1,5 @@
 import java.time.LocalDate;
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
@@ -8,17 +9,16 @@ public class Main {
         SchoolController controller = new SchoolController(model, studentView, subjectView);
 
         // Students
-        model.students.add(new Student("69000001", "นาย", "สมชาย", "ใจดี", LocalDate.of(2007, 5, 10), "โรงเรียน A", "somchai1@mail.com"));
-        model.students.add(new Student("69000002", "นางสาว", "สมหญิง", "รุ่งเรือง", LocalDate.of(2006, 3, 22), "โรงเรียน A", "somying@mail.com"));
-        model.students.add(new Student("69000003", "นาย", "ปกรณ์", "ตั้งใจ", LocalDate.of(2008, 1, 15), "โรงเรียน B", "pakorn@mail.com"));
-        model.students.add(new Student("69000004", "นางสาว", "วิภา", "มณีทอง", LocalDate.of(2007, 7, 9), "โรงเรียน B", "wipa@mail.com"));
-        model.students.add(new Student("69000005", "นาย", "จิรศักดิ์", "แสนดี", LocalDate.of(2006, 11, 30), "โรงเรียน C", "jirasak@mail.com"));
-        model.students.add(new Student("69000006", "นางสาว", "สุนีย์", "เพชรรัตน์", LocalDate.of(2005, 8, 19), "โรงเรียน C", "sunee@mail.com"));
-        model.students.add(new Student("69000007", "นาย", "ธีรเดช", "ชัยชนะ", LocalDate.of(2008, 2, 1), "โรงเรียน D", "teeradej@mail.com"));
-        model.students.add(new Student("69000008", "นางสาว", "ปรียา", "สุขใจ", LocalDate.of(2007, 9, 5), "โรงเรียน D", "preeya@mail.com"));
-        model.students.add(new Student("69000009", "นาย", "อดิศักดิ์", "แข็งแรง", LocalDate.of(2006, 4, 25), "โรงเรียน E", "adisak@mail.com"));
-        model.students.add(new Student("69000010", "นางสาว", "ชลธิชา", "สวยงาม", LocalDate.of(2005, 12, 12), "โรงเรียน E", "chon@mail.com"));
-
+        model.students.add(new Student("69000001", "นาย", "สมชาย", "ใจดี", LocalDate.of(2007, 5, 10), "โรงเรียน A", "somchai@mail.com","1234"));
+        model.students.add(new Student("69000002", "นางสาว", "สมหญิง", "รุ่งเรือง", LocalDate.of(2006, 3, 22), "โรงเรียน A", "somying@mail.com","1234"));
+        model.students.add(new Student("69000003", "นาย", "ปกรณ์", "ตั้งใจ", LocalDate.of(2008, 1, 15), "โรงเรียน B", "pakorn@mail.com","1234"));
+        model.students.add(new Student("69000004", "นางสาว", "วิภา", "มณีทอง", LocalDate.of(2007, 7, 9), "โรงเรียน B", "wipa@mail.com","1234"));
+        model.students.add(new Student("69000005", "นาย", "จิรศักดิ์", "แสนดี", LocalDate.of(2006, 11, 30), "โรงเรียน C", "jirasak@mail.com","1234"));
+        model.students.add(new Student("69000006", "นางสาว", "สุนีย์", "เพชรรัตน์", LocalDate.of(2005, 8, 19), "โรงเรียน C", "sunee@mail.com","1234"));
+        model.students.add(new Student("69000007", "นาย", "ธีรเดช", "ชัยชนะ", LocalDate.of(2008, 2, 1), "โรงเรียน D", "teeradej@mail.com","1234"));
+        model.students.add(new Student("69000008", "นางสาว", "ปรียา", "สุขใจ", LocalDate.of(2007, 9, 5), "โรงเรียน D", "preeya@mail.com","1234"));
+        model.students.add(new Student("69000009", "นาย", "อดิศักดิ์", "แข็งแรง", LocalDate.of(2006, 4, 25), "โรงเรียน E", "adisak@mail.com","1234"));
+        model.students.add(new Student("69000010", "นางสาว", "ชลธิชา", "สวยงาม", LocalDate.of(2005, 12, 12), "โรงเรียน E", "chon@mail.com","1234"));
 
         // Subjects
         model.subjects.add(new Subject("05501001", "Mathematics", 3, "อ.โดเรม่อน", null, 30));
@@ -32,15 +32,19 @@ public class Main {
         model.subjects.add(new Subject("90691004", "Geography", 2, "อ.โกโจ", null, 30));
         model.subjects.add(new Subject("90691005", "Art", 2, "อ.เอเรน", null, -1));
 
+        // ตัวอย่าง: สมชายลง Math ได้เกรดแล้ว
         Student somchai = model.students.get(0); // 69000001
         Subject math = model.subjects.get(0);    // 05501001
-
         Enrollment e1 = new Enrollment(somchai, math);
         e1.setGrade(3.5);
         model.enrollments.add(e1);
+        math.addStudent();
 
         // Login
-        Student student = model.students.get(0); // somchai
+        Student student = null;
+        while(student == null) {
+            student = controller.login();
+        }
         controller.showMenu(student);
     }
 }
