@@ -12,17 +12,35 @@ public class SchoolController {
         this.subjectView = subjectView;
     }
 
+    // ระบบ login
+    public Student login() {
+        System.out.print("รหัสนักเรียน: ");
+        String id = sc.nextLine();
+        System.out.print("รหัสผ่าน: ");
+        String pw = sc.nextLine();
+
+        for (Student s : model.students) {
+            if (s.getStudentId().equals(id) && s.getPassword().equals(pw)) {
+                System.out.println("เข้าสู่ระบบสำเร็จ!");
+                return s;
+            }
+        }
+        System.out.println("รหัสนักเรียนหรือรหัสผ่านไม่ถูกต้อง");
+        return null;
+    }
+
     public void showMenu(Student student) {
-        while(true) {
+        while (true) {
             System.out.println("\n---------------- เมนู ----------------");
             System.out.println("1. ลงทะเบียนเรียน");
             System.out.println("2. ดูรายละเอียดวิชา");
-            System.out.println("3. ออกจากระบบ");
+            System.out.println("3. ดูประวัติการลงทะเบียน");
+            System.out.println("4. ออกจากระบบ");
             System.out.print("เลือก : ");
             int choice = sc.nextInt();
             sc.nextLine();
 
-            switch(choice) {
+            switch (choice) {
                 case 1:
                     studentView.displaySubjects(model.subjects);
                     System.out.print("กรอกรหัสวิชาที่ต้องการลงทะเบียน : ");
@@ -43,6 +61,8 @@ public class SchoolController {
                         } else {
                             if (model.enrollStudent(student, sub)) {
                                 studentView.showMessage("ลงทะเบียนสำเร็จ!");
+                                // กลับไปหน้าประวัติ
+                                studentView.showEnrollments(student, model.enrollments);
                             } else {
                                 studentView.showMessage("ไม่สามารถลงทะเบียนได้");
                             }
@@ -51,17 +71,29 @@ public class SchoolController {
                         studentView.showMessage("ไม่พบวิชา");
                     }
                     break;
+
                 case 2:
                     System.out.print("กรอกรหัสวิชาที่ต้องการดู : ");
                     String detailId = sc.nextLine();
-                    Subject s = model.subjects.stream().filter(subj -> subj.getSubjectId().equals(detailId)).findFirst().orElse(null);
-                    if(s != null) subjectView.displaySubjectDetail(s);
-                    else studentView.showMessage("ไม่พบวิชา");
+                    Subject s = model.subjects.stream()
+                            .filter(subj -> subj.getSubjectId().equals(detailId))
+                            .findFirst()
+                            .orElse(null);
+                    if (s != null) {
+                        subjectView.displaySubjectDetail(s);
+                    } else {
+                        studentView.showMessage("ไม่พบวิชา");
+                    }
                     break;
+
                 case 3:
+                    studentView.showEnrollments(student, model.enrollments);
+                    break;
+
+                case 4:
+                    System.out.println("ออกจากระบบเรียบร้อย");
                     return;
             }
         }
     }
 }
-
